@@ -1,0 +1,4 @@
+kind: Template
+apiVersion: v1
+metadata:
+  name: nitrate-deploy
