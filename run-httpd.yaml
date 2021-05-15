@@ -13,6 +13,8 @@ objects:
         FROM registry.fedoraproject.org/fedora:33
         RUN dnf --no-docs install -y httpd && dnf clean all && rm -rf /var/lib/rpm
         CMD ["httpd", "-D", "FOREGROUND"]
+    strategy:
+      type: Docker
     output: 
       to:
         kind: ImageStreamTag
