@@ -1,5 +1,5 @@
 process-and-create:
 	oc process -f deploy.yaml | oc create -f -
 
-process:
-	oc process -f deploy.yaml
+process-locally:
+	oc process --local=true -f deploy.yaml
