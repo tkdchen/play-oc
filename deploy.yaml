@@ -14,17 +14,17 @@ objects:
       requests:
         storage: ${HTTPD_LOGS_VOL_SIZE}
     volumeName: "pv0001"
-- apiVersion: "v1"
-  kind: "PersistentVolumeClaim"
-  metadata:
-    name: ${APP_NAME}-db-data
-  spec:
-    accessModes:
-    - "ReadWriteOnce"
-    resources:
-      requests:
-        storage: ${DB_VOL_SIZE}
-    volumeName: "pv0001"
+#- apiVersion: "v1"
+#  kind: "PersistentVolumeClaim"
+#  metadata:
+#    name: ${APP_NAME}-db-data
+#  spec:
+#    accessModes:
+#    - "ReadWriteOnce"
+#    resources:
+#      requests:
+#        storage: ${DB_VOL_SIZE}
+#    volumeName: "pv0001"
 - kind: "DeploymentConfig"
   apiVersion: "v1"
   metadata:
@@ -44,8 +44,8 @@ objects:
           volumeMounts:
           - mountPath: ${HTTPD_LOGS_MOUNT_PATH}
             name: httpd-logs
-          - mountPath: ${DB_MOUNT_PATH}
-            name: db
+#          - mountPath: ${DB_MOUNT_PATH}
+#            name: db
           env:
           - name: NITRATE_SECRET_KEY
             value: nitrate_run_20210514
@@ -63,9 +63,9 @@ objects:
         - name: "httpd-logs"
           persistentVolumeClaim:
             claimName: ${APP_NAME}-httpd-logs
-        - name: "db"
-          persistentVolumeClaim:
-            claimName: ${APP_NAME}-db-data
+#        - name: "db"
+#          persistentVolumeClaim:
+#            claimName: ${APP_NAME}-db-data
     replicas: 1
     triggers:
     - type: "ConfigChange" 
@@ -95,10 +95,10 @@ parameters:
   name: APP_NAME
   required: true
   value: nitrate-webapp
-- description: Storage size of database
-  name: DB_VOL_SIZE
-  required: true
-  value: 100Mi
+#- description: Storage size of database
+#  name: DB_VOL_SIZE
+#  required: true
+#  value: 100Mi
 - description: Storage size of httpd logs
   name: HTTPD_LOGS_VOL_SIZE
   required: true
@@ -114,7 +114,7 @@ parameters:
 - description: Database name
   name: NITRATE_DB_NAME
   required: true
-  value: /var/nitrate-db/nitrate.db
+  value: /var/nitrate.db
 - description: Database host
   name: NITRATE_DB_HOST
   required: false
@@ -131,7 +131,7 @@ parameters:
   name: HTTPD_LOGS_MOUNT_PATH
   required: true
   value: /var/log/httpd/
-- description: Database volume mount path
-  name: DB_MOUNT_PATH
-  required: true
-  value: /var/nitrate-db/
+#- description: Database volume mount path
+#  name: DB_MOUNT_PATH
+#  required: true
+#  value: /var/nitrate-db/
