@@ -41,9 +41,9 @@ objects:
           ports:
           - containerPort: 80
             protocol: "TCP"
-          volumeMounts:
-          - mountPath: ${HTTPD_LOGS_MOUNT_PATH}
-            name: httpd-logs
+          # volumeMounts:
+          # - mountPath: ${HTTPD_LOGS_MOUNT_PATH}
+          #   name: httpd-logs
 #          - mountPath: ${DB_MOUNT_PATH}
 #            name: db
           env:
@@ -59,10 +59,10 @@ objects:
             value: ${NITRATE_DB_USER}
           - name: NITRATE_DB_PASSWORD
             value: ${NITRATE_DB_PASSWORD}
-        volumes:
-        - name: "httpd-logs"
-          persistentVolumeClaim:
-            claimName: ${APP_NAME}-httpd-logs
+        # volumes:
+        # - name: "httpd-logs"
+        #   persistentVolumeClaim:
+        #     claimName: ${APP_NAME}-httpd-logs
 #        - name: "db"
 #          persistentVolumeClaim:
 #            claimName: ${APP_NAME}-db-data
