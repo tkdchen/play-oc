@@ -1,0 +1,46 @@
+kind: Template
+apiVersion: v1
+metadata:
+  name: run-httpd
+objects:
+- kind: BuildConfig
+  apiVersion: v1
+  metadata:
+    name: run-httpd
+  spec:
+    source:
+      dockerfile: |
+        FROM registry.fedoraproject.org/fedora:33
+        RUN dnf --no-docs install -y httpd && dnf clean all && rm -rf /var/lib/rpm
+        CMD ["httpd", "-D", "FOREGROUND"]
+    output: 
+      to:
+        kind: ImageStreamTag
+        name: 172.30.1.1:5000/default/mysite:latest
+- kind: DeploymentConfig
+  apiVersion: v1
+  metadata:
+    name: run-httpd
+  spec:
+    template: 
+      metadata:
+        labels:
+          name: run-httpd
+      spec:
+        containers:
+        - name: mysite
+          image: 172.30.1.1:5000/default/mysite:latest
+          ports:
+          - containerPort: 80
+            protocol: "TCP"
+    replicas: 1
+    triggers:
+    - type: "ConfigChange"
+    - type: ImageChange
+      imageChangeParams:
+        automatic: true 
+        from:
+          kind: ImageStreamTag
+          name: 172.30.1.1:5000/default/mysite:latest
+        containerNames:
+        - run-httpd
