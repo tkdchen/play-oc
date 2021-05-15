@@ -10,13 +10,12 @@ objects:
     name: run-httpd
   spec:
     source:
-      dockerfile: |
-        FROM registry.fedoraproject.org/fedora:33
-        RUN dnf --no-docs install -y httpd && dnf clean all && rm -rf /var/lib/rpm
-        RUN echo "Listen 0.0.0.0:80" >> /etc/httpd/conf/httpd.conf
-        CMD ["httpd", "-D", "FOREGROUND"]
+      git:
+        uri: "https://github.com/tkdchen/play-oc"
+        ref: "master"
     strategy:
-      type: Docker
+      dockerStrategy:
+        dockerfilePath: Dockerfile-run-httpd
     output: 
       to:
         kind: ImageStreamTag
