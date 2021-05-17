@@ -3,6 +3,10 @@ apiVersion: v1
 metadata:
   name: run-httpd
 objects:
+- kind: ImageStream
+  apiVersion: v1
+  metadata:
+    name: run-httpd
 - kind: BuildConfig
   apiVersion: v1
   metadata:
@@ -18,7 +22,7 @@ objects:
     output: 
       to:
         kind: ImageStreamTag
-        name: 172.30.1.1:5000/run-httpd/mysite:latest
+        name: 172.30.1.1:5000/run-httpd/run-httpd:latest
 - kind: DeploymentConfig
   apiVersion: v1
   metadata:
@@ -31,7 +35,7 @@ objects:
       spec:
         containers:
         - name: mysite
-          image: 172.30.1.1:5000/run-httpd/mysite:latest
+          image: 172.30.1.1:5000/run-httpd/run-httpd:latest
           ports:
           - containerPort: 80
             protocol: "TCP"
@@ -43,6 +47,6 @@ objects:
         automatic: true 
         from:
           kind: ImageStreamTag
-          name: 172.30.1.1:5000/run-httpd/mysite:latest
+          name: run-httpd:latest
         containerNames:
         - run-httpd
