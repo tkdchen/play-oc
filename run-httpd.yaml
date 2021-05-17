@@ -22,7 +22,7 @@ objects:
     output: 
       to:
         kind: ImageStreamTag
-        name: 172.30.1.1:5000/run-httpd/run-httpd:latest
+        name: run-httpd:latest
 - kind: DeploymentConfig
   apiVersion: v1
   metadata:
