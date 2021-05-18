@@ -1,5 +1,5 @@
 FROM registry.fedoraproject.org/fedora:33
-RUN dnf --no-docs install -y httpd && dnf clean all && rm -rf /var/lib/rpm
+RUN dnf --nodocs install -y httpd && dnf clean all && rm -rf /var/lib/rpm
 RUN echo "Listen 0.0.0.0:80" >> /etc/httpd/conf/httpd.conf
 EXPOSE 80
 VOLUME /var/log/httpd
